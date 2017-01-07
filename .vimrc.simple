@@ -1,0 +1,42 @@
+" vimrc
+
+" options
+syntax on               " Synatax Highlighting
+filetype on             " Automatically detect file types.
+colorscheme elflord     "
+set viminfo='1000,f1,/50,:50,<50,n~/vim/.viminfo    " remember fun stuff
+set paste               " avoid extra tabs when pasting lines
+set nocompatible        " we want vim, not vi
+set ruler               " display current position in file
+set backspace=2         " BS and Del in insert mode allowed and go through EOLs
+set background=dark     " Show better fonts
+set laststatus=2        " Always show status line
+set statusline=%1*[%02n]\ %F%m%r%h%w%=%([%{&ff}]\ %y\ %c%V\ %l/%L\ %P%)
+set scrolloff=3         "
+set wildmenu            " Completion Menu
+set wildignore=*.o,*.obj,*.bak,*.exe " tab complete now ignores these
+set confirm             " confirm on exiting
+set noerrorbells        "
+set autowrite           " Save file before :next :make
+set autoread            " Read file when external modified
+set fileformat=unix     " write nixies end of lines
+set modeline
+set modelines=1
+set title               " enable setting the title string
+set printfont=courier:h8 " font for :hardcopy > ./sample.ps
+
+set incsearch           " Incremental Search
+set hlsearch            " Turn on HighLightSearching
+set ignorecase          " Ignore case when Seaching
+
+highlight Folded   ctermfg=darkgreen ctermbg=black
+highlight WildMenu ctermfg=grey ctermbg=darkblue
+highlight Search   ctermfg=lightred ctermbg=grey
+
+" maps
+" Fold Open /Close flip flop
+nmap <SPACE> za
+nmap <TAB> zA
+
+" programming
+autocmd FileType c source ~/.vim/c.vim
