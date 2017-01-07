@@ -1,0 +1,55 @@
+# .zshrc.simple 2016-01-07
+# Marcelo Correa <mvcorrea@gmail.com>
+
+# history control
+HISTFILE=~/.zsh_history
+HISTSIZE=5000
+SAVEHIST=5000
+HISTCONTROL=erasedups
+
+# shell options
+setopt append_history
+setopt hist_ignore_all_dups
+setopt hist_reduce_blanks
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt inc_append_history
+setopt menu_complete
+setopt autocd
+setopt prompt_subst
+
+autoload -Uz vcs_info
+
+# 
+zstyle ':completion::complete:*' use-cache on
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' menu select=1 _complete _ignored _approximate
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:default' list-colors
+zstyle ':vcs_info:*' actionformats '%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f'
+zstyle ':vcs_info:*' formats '%F{5}[%F{2}%b%F{5}]%f'
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:*' enable git cvs svn
+
+# aliases
+alias cd..="cd .."
+alias ..="cd .."
+alias ls="ls -FG --color"
+alias find="find . -name $1 -print"
+
+# functions
+right_prompt(){
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+        echo "%F{4}%~ %{$fg[grey]%}${vcs_info_msg_0_}%{$reset_color%}$del%f"
+  else
+        echo "%F{4}%~%f"
+  fi
+}
+
+# prompt
+export PROMPT="%F{2}%B%n%F{4}@%F{2}%m%#%f "
+export RPROMPT=$'$(right_prompt)'
+
+
